@@ -1,0 +1,10 @@
+## APIVersion: 101046
+## Title: scpRunner
+## Version: 2.0
+## Author: luchtt
+## Description: scp speedrun timer
+## SavedVariables: scpRunnerSavedVariables
+
+scpRunner.xml
+scpRunnerUI.lua
+scpRunner.lua
