@@ -5,8 +5,8 @@ ScpRunner = {
 
     --[[Variables]]
     currentTime = 0,
-    startTime = 0,
-    endTime = 0,
+    startTime = 42069,
+    endTime = 69420,
 
     currentSplit = 0,
     currentSplitStartTime = 0,
@@ -100,6 +100,8 @@ local function OnAddOnLoaded(event, addonName)
     ScpRunner.SavedVars = ZO_SavedVars:NewAccountWide("ScpRunnerSavedVariables", 1, nil, ScpRunner.defaults, "$InstallationWide")
 	
 	EVENT_MANAGER:RegisterForEvent(ScpRunner.playerActive, EVENT_PLAYER_ACTIVATED, function() ScpRunner:OnPlayerActivated() end)
+    ScpRunner:InitializeStatsScreen()
+    ScpRunner:CreateStatsScreenOpenAnimation()
 end
 EVENT_MANAGER:RegisterForEvent(ScpRunner.name, EVENT_ADD_ON_LOADED, OnAddOnLoaded)
 
@@ -168,10 +170,11 @@ function ScpRunner:CompareandDisplayData()
         end
         
         --[Sets]
-    
+        
         
         --[Calls function to display the stats screen and all other things attached to it]
-        ScpRunner:InitializeStatsScreen()
+        SCENE_MANAGER:Show("ScpRunnerStatsScene")
+        self.statsScreenTimeline:PlayFromStart()
     end
 end
 
@@ -185,7 +188,7 @@ function ScpRunner:TimeTallyer()
     EVENT_MANAGER:RegisterForUpdate("TimeTallyerAnimation", 10, function()
             elapsed = elapsed + 0.0033333
             displayedTimeInSeconds = tallyCurve(elapsed) * runTime
-            self.UI.TallyLabel:SetText(string.format("%02d:%05.2f", displayedTimeInSeconds/60, displayedTimeInSeconds%60))
+            scprStatsUITimeTallyLabel:SetText(string.format("%02d:%05.2f", displayedTimeInSeconds/60, displayedTimeInSeconds%60))
             if elapsed >= 1 then 
                 EVENT_MANAGER:UnregisterForUpdate("TimeTallyerAnimation")     
             end
