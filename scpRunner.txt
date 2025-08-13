@@ -5,6 +5,6 @@
 ## Description: scp speedrun timer
 ## SavedVariables: scpRunnerSavedVariables
 
-scpRunner.xml
-scpRunnerUI.lua
-scpRunner.lua
+ScpRunner.xml
+ScpRunner.lua
+ScpRunnerUI.lua

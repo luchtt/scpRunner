@@ -1,14 +1,14 @@
 <GuiXml>
     <Controls>
         <!-- Virtual controls -->
-        <Control name="MyRowTemplate" virtual="true" height="40" hidden="false">
+        <Control name="scprSplitsTemplates" virtual="true" height="40" hidden="false">
             <Controls>
-                <Label name="$(parent)scpSplitsName" font="ZoFontWinH2" 
+                <Label name="$(parent)SplitsName" font="ZoFontWinH2" 
                color="INTERFACE_COLOR_TYPE_TEXT_COLORS:INTERFACE_TEXT_COLOR_NORMAL" 
                horizontalAlignment="LEFT" verticalAlignment="CENTER" 
                movable="true" mouseEnabled="true" hidden="false"
                anchor="TOPLEFT"/>
-                <Label name="$(parent)scpSplitsTime" font="ZoFontWinH3" 
+                <Label name="$(parent)SplitsTime" font="ZoFontWinH3" 
                color="INTERFACE_COLOR_TYPE_TEXT_COLORS:INTERFACE_TEXT_COLOR_NORMAL" 
                horizontalAlignment="LEFT" verticalAlignment="CENTER" 
                movable="true" mouseEnabled="true" hidden="false"
@@ -17,7 +17,7 @@
         </Control>
         
         <!-- Timer and Splits visualizer -->
-        <TopLevelControl name="scprTimer" resizeToFitDescendents="true" mouseEnabled="true" movable="true" clampedToScreen="true">
+        <TopLevelControl name="scprHudTimer" resizeToFitDescendents="true" mouseEnabled="true" movable="true" clampedToScreen="true">
             <Controls>
 				<Texture name="$(parent)Icon" textureFile="/esoui/art/miscellaneous/timer_32.dds" hidden="true">
 					<Anchor point="TOPLEFT" offsetX="100" offsetY="100"/>
@@ -39,40 +39,40 @@
 		</TopLevelControl>
     
         <!-- Main run review UI -->
-        <TopLevelControl name="scprUI" hidden="true">
+        <TopLevelControl name="scprStatsUI" hidden="true">
             <Anchor point="CENTER"/>
                 <Controls>
                     <!-- Background/main -->
 
-                    <Texture name="$(parent)TopBG" textureFile="addonTemplate/art/PostDungeonBG1.dds" hidden="true">
+                    <Texture name="$(parent)TopBG" textureFile="ScpRunner/art/PostDungeonBG1.dds" alpha="0">
                         <Anchor point="TOP"/>
                         <Dimensions x="1152" y="700"/>
                     </Texture>
-                    <Texture name="$(parent)BottomBG" textureFile="addonTemplate/art/PostDungeonBG2.dds" hidden="true">
+                    <Texture name="$(parent)BottomBG" textureFile="ScpRunner/art/PostDungeonBG2.dds" alpha="0">
                         <Anchor point="BOTTOM"/>
                         <Dimensions x="1152" y="700"/>
                     </Texture>
-                    <Texture name="$(parent)loadscreenBG" textureFile="addonTemplate/art/ScpLoadscreenCrop.dds" hidden="false">
+                    <Texture name="$(parent)loadscreenBG" textureFile="ScpRunner/art/ScpLoadscreenCrop.dds" alpha="0">
                         <Anchor point="CENTER"/>
                         <Dimensions x="404" y="75"/>
                     </Texture>
-                    <Texture name="$(parent)TopTopDivider" textureFile="/esoui/art/miscellaneous/horizontaldivider_dynamic.dds" alpha="0" hidden="true">
+                    <Texture name="$(parent)TopTopDivider" textureFile="/esoui/art/miscellaneous/horizontaldivider_dynamic.dds" alpha="0">
                         <Anchor point="CENTER"/>
                         <Dimensions x="440" y="24"/>
                     </Texture>
-                    <Texture name="$(parent)TopDivider" textureFile="/esoui/art/miscellaneous/horizontaldivider_dynamic.dds" alpha="0" hidden="true">
+                    <Texture name="$(parent)TopDivider" textureFile="/esoui/art/miscellaneous/horizontaldivider_dynamic.dds" alpha="0">
                         <Anchor point="CENTER"/>
                         <Dimensions x="1152" y="24"/>
                     </Texture>
-                    <Texture name="$(parent)TopSubDivider" textureFile="/esoui/art/miscellaneous/horizontaldivider_dynamic.dds" alpha="0" hidden="true">
+                    <Texture name="$(parent)TopSubDivider" textureFile="/esoui/art/miscellaneous/horizontaldivider_dynamic.dds" alpha="0">
                         <Anchor point="CENTER"/>
                         <Dimensions x="390" y="24"/>
                     </Texture>
-                    <Texture name="$(parent)BottomDivider" textureFile="/esoui/art/miscellaneous/horizontaldivider_dynamic.dds" alpha="0" hidden="true">
+                    <Texture name="$(parent)BottomDivider" textureFile="/esoui/art/miscellaneous/horizontaldivider_dynamic.dds" alpha="0">
                         <Anchor point="CENTER"/>
                         <Dimensions x="1152" y="24"/>
                     </Texture>
-                    <Texture name="$(parent)BottomSubDivider" textureFile="/esoui/art/miscellaneous/horizontaldivider_dynamic.dds" alpha="0" hidden="true">
+                    <Texture name="$(parent)BottomSubDivider" textureFile="/esoui/art/miscellaneous/horizontaldivider_dynamic.dds" alpha="0">
                         <Anchor point="CENTER"/>
                         <Dimensions x="460" y="24"/>
                     </Texture>
@@ -81,7 +81,7 @@
 
                      <!-- Time Counter -->
 
-                    <Texture name="$(parent)TimeTallyIcon" textureFile="/esoui/art/trials/trialpoints_veryhigh.dds" alpha="0" hidden="true">
+                    <Texture name="$(parent)TimeTallyIcon" textureFile="/esoui/art/trials/trialpoints_veryhigh.dds" alpha="0">
                         <Anchor point="CENTER"/>
                         <Dimensions x="54" y="54"/>
                     </Texture>
@@ -94,11 +94,11 @@
 
                     <!-- Dungeon Name -->
 
-                    <Texture name="$(parent)DungeonIcon" textureFile="/esoui/art/journal/gamepad/gp_questtypeicon_groupdungeon.dds" alpha="0" hidden="true">
+                    <Texture name="$(parent)DungeonIcon" textureFile="/esoui/art/journal/gamepad/gp_questtypeicon_groupdungeon.dds" alpha="0">
                         <Anchor point="CENTER"/>
                         <Dimensions y="64" x="64"/>
                     </Texture>
-                    <Label name="$(parent)DungeonName" font="ZoFontWinH1" horizontalAlignment="LEFT" verticalAlignment="CENTER" hidden="true">
+                    <Label name="$(parent)DungeonName" font="ZoFontWinH1" horizontalAlignment="LEFT" verticalAlignment="CENTER">
                         <Anchor point="CENTER"/>
                     </Label>
 
@@ -114,15 +114,15 @@
                         <Anchor point="CENTER"/>
                         <Dimensions x="48" y="48"/>
                     </Texture>
-                    <Texture name="$(parent)SplitsTopDivider" textureFile="/esoui/art/miscellaneous/horizontaldivider_dynamic.dds" alpha="0" hidden="true">
+                    <Texture name="$(parent)SplitsTopDivider" textureFile="/esoui/art/miscellaneous/horizontaldivider_dynamic.dds" alpha="0">
                         <Anchor point="CENTER"/>
                         <Dimensions x="230" y="24"/>
                     </Texture>
-                    <Texture name="$(parent)SplitsBottomDivider" textureFile="/esoui/art/miscellaneous/horizontaldivider_dynamic.dds" alpha="0" hidden="true">
+                    <Texture name="$(parent)SplitsBottomDivider" textureFile="/esoui/art/miscellaneous/horizontaldivider_dynamic.dds" alpha="0">
                         <Anchor point="CENTER"/>
                         <Dimensions x="230" y="24"/>
                     </Texture>
-                    <Control name="$(parent)SplitsList" inherits="ZO_ScrollList" hidden="false">
+                    <Control name="$(parent)SplitsList" inherits="ZO_ScrollList">
                         <Anchor point="CENTER"/>
                         <Dimensions x="300" y="300"/>
                     </Control>
@@ -139,11 +139,11 @@
                         <Anchor point="CENTER"/>
                         <Dimensions x="48" y="48"/>
                     </Texture>
-                    <Texture name="$(parent)TrifectasTopDivider" textureFile="/esoui/art/miscellaneous/horizontaldivider_dynamic.dds" alpha="0" hidden="true">
+                    <Texture name="$(parent)TrifectasTopDivider" textureFile="/esoui/art/miscellaneous/horizontaldivider_dynamic.dds" alpha="0">
                         <Anchor point="CENTER"/>
                         <Dimensions x="230" y="24"/>
                     </Texture>
-                    <Texture name="$(parent)TrifectasBottomDivider" textureFile="/esoui/art/miscellaneous/horizontaldivider_dynamic.dds" alpha="0" hidden="true">
+                    <Texture name="$(parent)TrifectasBottomDivider" textureFile="/esoui/art/miscellaneous/horizontaldivider_dynamic.dds" alpha="0">
                         <Anchor point="CENTER"/>
                         <Dimensions x="230" y="24"/>
                     </Texture>
@@ -152,7 +152,7 @@
 
                     <!-- SCP Map -->
 
-                    <Texture name="$(parent)Map" textureFile="addonTemplate/art/SCP-Map-Clean.dds" movable="true" mouseEnabled="true" alpha="0.6">
+                    <Texture name="$(parent)Map" textureFile="ScpRunner/art/SCP-Map-Clean.dds" movable="true" mouseEnabled="true" alpha="0.6">
                         <Anchor point="CENTER"/>
                         <Dimensions x="350" y="672"/>
                     </Texture>

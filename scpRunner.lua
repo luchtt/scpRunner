@@ -1,6 +1,6 @@
-scpRunner = {
+ScpRunner = {
     --[[Constants]]
-    name ="scpRunner", --addon name
+    name ="ScpRunner", --addon name
     updateTickRate = 10, --milliseconds 
 
     --[[Variables]]
@@ -12,6 +12,7 @@ scpRunner = {
     currentSplitStartTime = 0,
     currentSplitEndTime = 0,
     wasDamageDone = false,
+    wasStatsScreenOpened = false,
 
     --[[Tables]]--
     currentRunSplits = {
@@ -73,50 +74,49 @@ scpRunner = {
 }
 
 --[[Player Activated, checks whether zone is Scalecaller Peak]]
-function scpRunner:OnPlayerActivated()
+function ScpRunner:OnPlayerActivated()
     local zoneId = GetZoneId(GetUnitZoneIndex("player"))
     --[debug
     d("OnPlayerActivated Fired")
     if (zoneId == 1010 and self.currentTime == 0) then--If zone is scp, and current time ISN'T 0, it means function fired due to zone rechange (2nd boss door) or respawn (at wayshrine)
         --[[Start listening for]]
         --[Dungeon Start and Finish/Failed Checkers]
-        EVENT_MANAGER:RegisterForEvent("scprStartTimer", EVENT_PLAYER_COMBAT_STATE, function() scpRunner:OnStartDungeon() end)
-        EVENT_MANAGER:RegisterForEvent("scprEndDungeon", EVENT_UNIT_DEATH_STATE_CHANGED, function() scpRunner:OnZaanDeath() end)
+        EVENT_MANAGER:RegisterForEvent("scprStartTimer", EVENT_PLAYER_COMBAT_STATE, function() ScpRunner:OnStartDungeon() end)
+        EVENT_MANAGER:RegisterForEvent("scprEndDungeon", EVENT_UNIT_DEATH_STATE_CHANGED, function() ScpRunner:OnZaanDeath() end)
         EVENT_MANAGER:AddFilterForEvent("scprEndDungeon", EVENT_UNIT_DEATH_STATE_CHANGED, REGISTER_FILTER_UNIT_TAG, "boss1")
-        EVENT_MANAGER:RegisterForEvent("scprPlayerDied", EVENT_UNIT_DEATH_STATE_CHANGED, function() scpRunner:OnPlayerDied() end)
+        EVENT_MANAGER:RegisterForEvent("scprPlayerDied", EVENT_UNIT_DEATH_STATE_CHANGED, function() ScpRunner:OnPlayerDied() end)
         EVENT_MANAGER:AddFilterForEvent("scprPlayerDied", EVENT_UNIT_DEATH_STATE_CHANGED, REGISTER_FILTER_UNIT_TAG, "player")
         --[Splits Manager]
-        EVENT_MANAGER:RegisterForEvent("scprCreateSplits", EVENT_PLAYER_COMBAT_STATE, function() scpRunner:CreateSplitOnCombatEnd() end)
-        EVENT_MANAGER:RegisterForEvent("scprDamageDoneCheck", EVENT_COMBAT_EVENT, function() scpRunner:OnDamageDone() end)
+        EVENT_MANAGER:RegisterForEvent("scprCreateSplits", EVENT_PLAYER_COMBAT_STATE, function() ScpRunner:CreateSplitOnCombatEnd() end)
+        EVENT_MANAGER:RegisterForEvent("scprDamageDoneCheck", EVENT_COMBAT_EVENT, function() ScpRunner:OnDamageDone() end)
         EVENT_MANAGER:AddFilterForEvent("scprDamageDoneCheck", EVENT_COMBAT_EVENT, REGISTER_FILTER_SOURCE_COMBAT_UNIT_TYPE, COMBAT_UNIT_TYPE_PLAYER)
     end
 end
 --[load addon and savedvariables, starts OnPlayerActivated]
 local function OnAddOnLoaded(event, addonName)
-    if addonName ~= scpRunner.name then return end
-    EVENT_MANAGER:UnregisterForEvent(scpRunner.name, EVENT_ADD_ON_LOADED)
+    if addonName ~= ScpRunner.name then return end
+    EVENT_MANAGER:UnregisterForEvent(ScpRunner.name, EVENT_ADD_ON_LOADED)
 
-    scpRunner.SavedVars = ZO_SavedVars:NewAccountWide("scpRunnerSavedVariables", 1, nil, scpRunner.defaults, "$InstallationWide")
+    ScpRunner.SavedVars = ZO_SavedVars:NewAccountWide("ScpRunnerSavedVariables", 1, nil, ScpRunner.defaults, "$InstallationWide")
 	
-	EVENT_MANAGER:RegisterForEvent(scpRunner.playerActive, EVENT_PLAYER_ACTIVATED, function() scpRunner:OnPlayerActivated() end)
-    scpRunner:LoadUI()
+	EVENT_MANAGER:RegisterForEvent(ScpRunner.playerActive, EVENT_PLAYER_ACTIVATED, function() ScpRunner:OnPlayerActivated() end)
 end
-EVENT_MANAGER:RegisterForEvent(scpRunner.name, EVENT_ADD_ON_LOADED, OnAddOnLoaded)
+EVENT_MANAGER:RegisterForEvent(ScpRunner.name, EVENT_ADD_ON_LOADED, OnAddOnLoaded)
 
 --------------------------------
---[[scpRunner Timer and Splits]]
+--[[ScpRunner Timer and Splits]]
 --------------------------------
 
 --[Start Dungeon/Timer]
-function scpRunner:OnStartDungeon(_, inCombat)
+function ScpRunner:OnStartDungeon(_, inCombat)
     if inCombat == true and self.currentTime == 0 then
-        scpRunner:Timer()
+        ScpRunner:Timer()
         self.startTime = GetGameTimeMilliseconds()
         EVENT_MANAGER:UnregisterForEvent("scprStartTimer", EVENT_PLAYER_COMBAT_STATE)
     end
 end
 
-function scpRunner:Timer()
+function ScpRunner:Timer()
     EVENT_MANAGER:RegisterForUpdate("scprTimer", self.updateTickRate, 
         function()
             self.currentTime = (GetGameTimeMilliseconds() - self.startTime) / 1000
@@ -124,60 +124,85 @@ function scpRunner:Timer()
         end)
 end
 
---[End Run Checkers & Function]
-function scpRunner:OnZaanDeath(_,unitTag,_)
+--[End Run Checkers & Functions]
+function ScpRunner:OnZaanDeath(_,unitTag,_)
     local _, maxHp, _ = GetUnitPower(unitTag, COMBAT_MECHANIC_FLAGS_HEALTH) --UnitPower in this case for flags_health just means currenthp, maxhp, and effectivehp. weird name
     if self.zaanHp[maxHp] then --Each time an enemy dies, it checks the exact hp amount zaan has on normal, veteran, and HM, if any of these match it must be zaan that died.
         self.endTime = GetGameTimeMilliseconds()
-        scpRunner:EndRun(1)
+        ScpRunner:EndRun(1)
         d("Zaan Died")
     end
 end
 
-function scpRunner:onPlayerDied(_,_,isDead)
+function ScpRunner:onPlayerDied(_,_,isDead)
     if isDead then
-        scpRunner:EndRun(0)
+        ScpRunner:EndRun(0)
         d("Player Died")
     end
 end
 
-function scpRunner:EndRun(Trifecta) --1 or 0, 1 means I killed zaan, aka trifecta no death, 0 means run ended from dying aka no trifecta.
+function ScpRunner:EndRun(Trifecta) --1 or 0, 1 means I killed zaan, aka trifecta no death, 0 means run ended from dying aka no trifecta.
     if Trifecta == 1 then 
         d("tri get")
     end
-    --[Wipe data, but this should not be in this function yet. I need to make the spllits display first.]--
-    self.currentTime = 0
-    self.startTime = 0
-    self.endTime = 0
 
-    self.currentSplit = 0
-    self.currentSplitStartTime = 0
-    self.currentSplitEndTime = 0
+    --[Unregister all events and reset a few variables]
+    EVENT_MANAGER:UnregisterForUpdate("scprTimer")
+    EVENT_MANAGER:UnregisterForEvent("scprEndDungeon", EVENT_UNIT_DEATH_STATE_CHANGED)
+    EVENT_MANAGER:UnregisterForEvent("scprPlayerDied", EVENT_UNIT_DEATH_STATE_CHANGED)
+    EVENT_MANAGER:UnregisterForEvent("scprCreateSplits", EVENT_PLAYER_COMBAT_STATE)
+    EVENT_MANAGER:UnregisterForEvent("scprDamageDoneCheck", EVENT_COMBAT_EVENT)
+
+    ScpRunner:CompareandDisplayData()
 end
 
-function scpRunner:CompareandDisplayData()
+function ScpRunner:CompareandDisplayData()
+    --[Checks if run exists]
     if self.currentTime ~= 0 then
         d("Comparing Times, run had been started and ended")
+
+        --[Sets timeloss for each split recorded, to be displayed next to splits]--
         for i = 1, #self.currentRunSplits do --i = 1 (start number), until #table entry count, so 20 splits here.
-            local BestSplitTime = self.SavedVars[i].time
+            local BestSplitTime = self.SavedVars.splits[i].time
             self.currentRunSplits[i].timeloss = (self.currentRunSplits[i].time - BestSplitTime)
         end
+        
+        --[Sets]
     
-        --rest of the stuff for displaying/comparing the data in the new UI
+        
+        --[Calls function to display the stats screen and all other things attached to it]
+        ScpRunner:InitializeStatsScreen()
     end
+end
+
+function ScpRunner:TimeTallyer()
+
+    PlaySound(SOUNDS.ENDLESS_DUNGEON_SCORE_CALCULATE)
+    local runTime = (self.startTime - self.endTime)
+    local elapsed = 0
+    local tallyCurve = ZO_GenerateCubicBezierEase(0.5,0.15,0,1)
+    
+    EVENT_MANAGER:RegisterForUpdate("TimeTallyerAnimation", 10, function()
+            elapsed = elapsed + 0.0033333
+            displayedTimeInSeconds = tallyCurve(elapsed) * runTime
+            self.UI.TallyLabel:SetText(string.format("%02d:%05.2f", displayedTimeInSeconds/60, displayedTimeInSeconds%60))
+            if elapsed >= 1 then 
+                EVENT_MANAGER:UnregisterForUpdate("TimeTallyerAnimation")     
+            end
+        end)
 end
 
 --[Splits Manager]
 
 --[this function exists to check whether the split was a non-combat one, if it wasnt, true or false can disregard it since wasDamageDone has to be true while a split is being registered]
-function scpRunner:OnDamageDone(_,result,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_)
+function ScpRunner:OnDamageDone(_,result,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_,_)
     if result == (ACTION_RESULT_DAMAGE or ACTION_RESULT_CRITICAL_DAMAGE or ACTION_RESULT_DOT_TICK or ACTION_RESULT_DOT_TICK_CRITICAL) then
         self.wasDamageDone = true
     end
 end
 
-function scpRunner:CreateSplitOnCombatEnd(_, inCombat)
-    local bestSplit = self.SavedVars[self.currentSplit].time
+function ScpRunner:CreateSplitOnCombatEnd(_, inCombat)
+    local bestSplit = self.SavedVars.splits[self.currentSplit].time
 
     if inCombat == true then
         self.currentSplitStartTime = GetGameTimeMilliseconds()
