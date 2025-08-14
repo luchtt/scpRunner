@@ -1,18 +1,11 @@
 <GuiXml>
     <Controls>
         <!-- Virtual controls -->
-        <Control name="scprSplitsTemplates" virtual="true" height="40" hidden="false">
+        <Control name="scprSplitsTemplates" virtual="true" hidden="false">
+            <Dimensions y="32"/>
             <Controls>
-                <Label name="$(parent)SplitsName" font="ZoFontWinH2" 
-               color="INTERFACE_COLOR_TYPE_TEXT_COLORS:INTERFACE_TEXT_COLOR_NORMAL" 
-               horizontalAlignment="LEFT" verticalAlignment="CENTER" 
-               movable="true" mouseEnabled="true" hidden="false"
-               anchor="TOPLEFT"/>
-                <Label name="$(parent)SplitsTime" font="ZoFontWinH3" 
-               color="INTERFACE_COLOR_TYPE_TEXT_COLORS:INTERFACE_TEXT_COLOR_NORMAL" 
-               horizontalAlignment="LEFT" verticalAlignment="CENTER" 
-               movable="true" mouseEnabled="true" hidden="false"
-               anchor="BOTTOMLEFT"/>
+                <Label name="$(parent)SplitsName" font="ZoFontWinH2" color="INTERFACE_COLOR_TYPE_TEXT_COLORS:INTERFACE_TEXT_COLOR_NORMAL" horizontalAlignment="LEFT"/>
+                <Label name="$(parent)SplitsTime" font="ZoFontWinH3" color="INTERFACE_COLOR_TYPE_TEXT_COLORS:INTERFACE_TEXT_COLOR_NORMAL" horizontalAlignment="LEFT"/>
             </Controls>
         </Control>
         
@@ -70,10 +63,6 @@
                             <Texture name="$(parent)BottomDivider" textureFile="/esoui/art/miscellaneous/horizontaldivider_dynamic.dds" alpha="0">
                                 <Anchor point="CENTER"/>
                                 <Dimensions x="1152" y="24"/>
-                            </Texture>
-                            <Texture name="$(parent)BottomSubDivider" textureFile="/esoui/art/miscellaneous/horizontaldivider_dynamic.dds" alpha="0">
-                                <Anchor point="CENTER"/>
-                                <Dimensions x="460" y="24"/>
                             </Texture>
                         </Controls>
                     </Control>
@@ -135,8 +124,8 @@
                                 <Dimensions x="230" y="24"/>
                             </Texture>
                             <Control name="$(parent)List" inherits="ZO_ScrollList">
-                                <Anchor point="CENTER"/>
-                                <Dimensions x="300" y="300"/>
+                                <Anchor point="CENTER" offsetX="170" offsetY ="0"/>
+                                <Dimensions x="230" y="570"/>
                             </Control>
                         </Controls>
                     </Control>
@@ -167,7 +156,7 @@
                     </Control>
                     <!-- Trifecta Counter-->
 
-                    <!-- SCP Map -->
+                    <!-- SCP Map
                      <Control name="$(parent)Map">
                         <Anchor point="CENTER"/>
                         <Controls>
@@ -177,7 +166,46 @@
                             </Texture>
                         </Controls>
                     </Control>
-                    <!-- SCP Map -->
+                    SCP Map -->
+
+                    <!-- Instance Resetter -->
+                     <Control name="$(parent)DifficultyChanger">
+                        <Anchor point="CENTER"/>
+                        <Controls>
+                            <Button name="$(parent)ChangeDiffButton" alpha="0">
+                                <Textures 
+                                normal="/esoui/art/lfg/lfg_groupfinder_refreshsearch_up.dds" 
+                                mouseOver="/esoui/art/lfg/lfg_groupfinder_refreshsearch_over.dds"
+                                pressed="/esoui/art/lfg/lfg_groupfinder_refreshsearch_down.dds"/>
+                                <Anchor point="CENTER"/>
+                                <Dimensions x="56" y="56"/>
+                            </Button>
+                            <Texture name="$(parent)NormalDiffActive" textureFile="/esoui/art/lfg/lfg_normaldungeon_up.dds" alpha="0">
+                                <Anchor point="CENTER"/>
+                                <Dimensions x="50" y="50"/>
+                            </Texture>
+                            <Texture name="$(parent)NormalDiffInactive" textureFile="/esoui/art/lfg/lfg_normaldungeon_disabled.dds" alpha="0">
+                                <Anchor point="CENTER"/>
+                                <Dimensions x="50" y="50"/>
+                            </Texture>
+                            <Texture name="$(parent)VeteranDiffActive" textureFile="/esoui/art/lfg/lfg_veterandungeon_up.dds" alpha="0">
+                                <Anchor point="CENTER"/>
+                                <Dimensions x="50" y="50"/>
+                            </Texture>
+                            <Texture name="$(parent)VeteranDiffInactive" textureFile="/esoui/art/lfg/lfg_veterandungeon_disabled.dds" alpha="0">
+                                <Anchor point="CENTER"/>
+                                <Dimensions x="50" y="50"/>
+                            </Texture>
+                            <Texture name="$(parent)TopDivider" textureFile="/esoui/art/miscellaneous/horizontaldivider_dynamic.dds" alpha="0">
+                                <Anchor point="CENTER"/>
+                                <Dimensions x="230" y="24"/>
+                            </Texture>
+                            <Texture name="$(parent)BottomDivider" textureFile="/esoui/art/miscellaneous/horizontaldivider_dynamic.dds" alpha="0">
+                                <Anchor point="CENTER"/>
+                                <Dimensions x="230" y="24"/>
+                            </Texture>
+                        </Controls>
+                     </Control>
                 </Controls>
         </TopLevelControl>
 

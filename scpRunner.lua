@@ -102,6 +102,7 @@ local function OnAddOnLoaded(event, addonName)
 	EVENT_MANAGER:RegisterForEvent(ScpRunner.playerActive, EVENT_PLAYER_ACTIVATED, function() ScpRunner:OnPlayerActivated() end)
     ScpRunner:InitializeStatsScreen()
     ScpRunner:CreateStatsScreenOpenAnimation()
+    ScpRunner:CreateSplitsList()
 end
 EVENT_MANAGER:RegisterForEvent(ScpRunner.name, EVENT_ADD_ON_LOADED, OnAddOnLoaded)
 
@@ -179,7 +180,6 @@ function ScpRunner:CompareandDisplayData()
 end
 
 function ScpRunner:TimeTallyer()
-
     PlaySound(SOUNDS.ENDLESS_DUNGEON_SCORE_CALCULATE)
     local runTime = (self.startTime - self.endTime)
     local elapsed = 0
@@ -195,6 +195,7 @@ function ScpRunner:TimeTallyer()
         end)
 end
 
+------------------
 --[Splits Manager]
 
 --[this function exists to check whether the split was a non-combat one, if it wasnt, true or false can disregard it since wasDamageDone has to be true while a split is being registered]
@@ -206,7 +207,7 @@ end
 
 function ScpRunner:CreateSplitOnCombatEnd(_, inCombat)
     local bestSplit = self.SavedVars.splits[self.currentSplit].time
-
+    
     if inCombat == true then
         self.currentSplitStartTime = GetGameTimeMilliseconds()
     end
@@ -241,8 +242,3 @@ function ScpRunner:CreateSplitOnCombatEnd(_, inCombat)
         end
     end
 end
-
--------------------
---[[End Screen UI]]
--------------------
-

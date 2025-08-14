@@ -13,7 +13,6 @@ ScpRunner.FrameAnimationStartAndEndPositions = {
     {scprStatsUIFrameBottomBG, 500, 0, 500, 450, 0.7, 0},
     {scprStatsUIFrameloadscreenBG, 500, 0, 500, -490, .7, 0},
     {scprStatsUIFrameTopDivider, 500, 0, 500, -450, 1, 0},
-    {scprStatsUIFrameBottomSubDivider, 500, 0, 500, 375, 1, 0},
     {scprStatsUIFrameBottomDivider, 500, 0, 500, 450, 1, 0},
     --[Dungeon Icon/Name]
     {scprStatsUIDungeonIcon, 400, 0, 360, -490, 1, 0},
@@ -31,7 +30,15 @@ ScpRunner.FrameAnimationStartAndEndPositions = {
     {scprStatsUITrifectasLabel, 500, 0, 830, -333, 1, 0},
     {scprStatsUITrifectasIcon, 500, 0, 745, -326, 1, 0},
     {scprStatsUITrifectasTopDivider, 500, 0, 830, -360, 1, 0},
-    {scprStatsUITrifectasBottomDivider, 500, 0, 830, -295, 1, 0}
+    {scprStatsUITrifectasBottomDivider, 500, 0, 830, -295, 1, 0},
+    --[Difficulty Switcher]
+    {scprStatsUIDifficultyChangerChangeDiffButton,500 ,0, 500, 337, 1, 0},
+    {scprStatsUIDifficultyChangerNormalDiffActive,500 ,0, 450, 337, 1, 0},
+    {scprStatsUIDifficultyChangerNormalDiffInactive,500 ,0, 450, 337, 1, 0},
+    {scprStatsUIDifficultyChangerVeteranDiffActive,500 ,0, 550, 337, 1, 0},
+    {scprStatsUIDifficultyChangerVeteranDiffInactive,500 ,0, 550, 337, 1, 0},
+    {scprStatsUIDifficultyChangerTopDivider, 500, 0, 500, 300, 1, 0},
+    {scprStatsUIDifficultyChangerBottomDivider, 500, 0, 500, 375, 1, 0},
 }
 
 ------------------------------
@@ -120,8 +127,39 @@ function ScpRunner:CreateStatsScreenOpenAnimation()
     end
 end
 
+--[Splits List]
 
+function ScpRunner:CreateSplitsList()
+    ZO_ScrollList_AddDataType(scprStatsUISplitsList, 1, scprSplitsTemplates, 32, function () self:FormatSplitsListItems() end)
+end
+
+function ScpRunner:FormatSplitsListItems(control, data)
+    local Name = control:GetNamedChild("SplitsName")
+    local Time = control:GetNamedChild("SplitsTime")
+
+    Name:SetText(data.name)
+    Time:SetText(string.format("Time: %.2f, FightTime: %.2f", data.time, data.fightTime))
+end
+
+function ScpRunner:PopulateSplitsList()
+
+    local InputSplitsData = ZO_ScrollList_GetDataList(scprStatsUISplitsList)
+
+    ZO_ScrollList_Clear(scprStatsUISplitsList)
+     for _, entry in ipairs(self.currentRunSplits) do
+        local newEntry = ZO_ScrollList_CreateDataEntry(1, entry)
+
+        table.insert(InputSplitsData, newEntry)
+     end
+     ZO_ScrollList_Commit(scprStatsUISplitsList)
+end
+
+
+--[debug]
 SLASH_COMMANDS["/createscene1"] = function() 
     SCENE_MANAGER:Show("ScpRunnerStatsScene")
     ScpRunner.statsScreenTimeline:PlayFromStart()
     end
+SLASH_COMMANDS["/createlist1"] = function()
+    ScpRunner:PopulateSplitsList()
+end
