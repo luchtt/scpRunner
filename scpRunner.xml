@@ -51,7 +51,7 @@
 					<Anchor point="TOPLEFT" offsetX="100" offsetY="100"/>
 					<Dimensions x="32" y="32"/>
 				</Texture>
-				<Label name="$(parent)Timer" font="ZoFontWinH2" horizontalAlignment="LEFT" verticalAlignment="CENTER" hidden="true">
+				<Label name="$(parent)Timer" text="00:00.00" font="ZoFontWinH2" horizontalAlignment="LEFT" verticalAlignment="CENTER" hidden="true">
 					<Anchor point="LEFT" relativePoint="RIGHT" relativeTo="$(parent)Icon" offsetX="6" offsetY="-1"/>
 					<Dimensions y="24"/>
 				</Label>

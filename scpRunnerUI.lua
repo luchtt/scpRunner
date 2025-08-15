@@ -150,15 +150,15 @@ function ScpRunner:FormatSplitsListItems(control, data)
         Time:SetText(string.format("%02d:%05.2f", data.time/60, data.time%60))
         FightTime:SetText(string.format("%02d:%05.2f", data.fightTime/60, data.fightTime%60))
         --[Same function as in scprunner:createsplit, just adapted a bit for displaying in the ui]
-        if data.timeloss == 0 then
-                TimeLoss:SetText((string.format("|ce6f024%01.2f", data.timeloss)))
-            elseif data.timeloss <= 0 then
-                TimeLoss:SetText((string.format("|c55e813%01.2f", data.timeloss)))
-            elseif data.timeloss >= 0 then
-                TimeLoss:SetText(string.format("|cff0000+%01.2f", data.timeloss))
-                Overwrite:SetEnabled(false)
-                Overwrite:SetMouseEnabled(false)
-            end
+        if data.newtime == true then
+            TimeLoss:SetText((string.format("|ce6f024%01.2f", data.time)))
+        elseif data.timeloss <= 0 then
+            TimeLoss:SetText((string.format("|c55e813%01.2f", data.timeloss)))
+        elseif data.timeloss >= 0 then
+            TimeLoss:SetText(string.format("|cff0000+%01.2f", data.timeloss))
+            Overwrite:SetEnabled(false)
+            Overwrite:SetMouseEnabled(false)
+        end
         
         --[If not means this hasn't even been set as a variable yet. If it has been, that means this control already exists. Since it's independent of split values it doesnt need to be re-created.]
         if not control.AnimationHandler then 
@@ -191,11 +191,11 @@ function ScpRunner:PopulateSplitsList()
     ZO_ScrollList_Clear(scprStatsUISplitsList)
      for _, entry in ipairs(self.currentRunSplits) do
         --[Only let through splits that were actually done/in the progress of done]
-        --if entry.time ~= 0 then
+        if entry.time ~= 0 then
         local newEntry = ZO_ScrollList_CreateDataEntry(1, entry)
 
         table.insert(InputSplitsData, newEntry)
-        --end
+        end
      end
      ZO_ScrollList_Commit(scprStatsUISplitsList)
 end

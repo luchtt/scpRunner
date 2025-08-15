@@ -6,9 +6,9 @@ ScpRunner = {
     --[[Variables]]
     currentTime = 0,
     startTime = 0,
-    endTime = 600.23,
+    endTime = 0,
 
-    currentSplit = 0,
+    currentSplit = 1, --needs to be 1, not 0.
     currentSplitStartTime = 0,
     currentSplitEndTime = 0,
     wasDamageDone = false,
@@ -16,50 +16,50 @@ ScpRunner = {
 
     --[[Tables]]--
     currentRunSplits = {
-        {name = "Trash 1", time = 5.555, fightTime = 5.555, timeloss = -0.46},
-        {name = "Trash 2", time = 20.21, fightTime = 8, timeloss = 4.56},
-        {name = "Trash 3", time = 0, fightTime = 0, timeloss = 0},
-        {name = "Trash 4", time = 0, fightTime = 0, timeloss = 0},
-        {name = "Trash 5", time = 0, fightTime = 0, timeloss = 0},
-        {name = "Trash 6", time = 0, fightTime = 0, timeloss = 0},
-        {name = "Rinaerus the Rancid & Orzun the Foul-Smelling", time = 0, fightTime = 0, timeloss = 0},
-        {name = "Trash 7", time = 0, fightTime = 0, timeloss = 0},
-        {name = "Doylemish Ironheart", time = 0, fightTime = 0, timeloss = 0},
-        {name = "Trash 8", time = 0, fightTime = 0, timeloss = 0},
-        {name = "Trash 9", time = 0, fightTime = 0, timeloss = 0},
-        {name = "Trash 10", time = 0, fightTime = 0, timeloss = 0},
-        {name = "Trash 11", time = 0, fightTime = 0, timeloss = 0},
-        {name = "Matriarch Aldis", time = 0, fightTime = 0, timeloss = 0},
-        {name = "trash12", time = 0, fightTime = 0, timeloss = 0},
-        {name = "trash13", time = 0, fightTime = 0, timeloss = 0},
-        {name = "trash14", time = 0, fightTime = 0, timeloss = 0},
-        {name = "trash15", time = 0, fightTime = 0, timeloss = 0},
-        {name = "Plague Concoctor Mortieu", time = 0, fightTime = 0, timeloss = 0},
-        {name = "Zaan the Scalecaller", time = 0, fightTime = 0, timeloss = 0},
+        {name = "Trash 1", time = 0, fightTime = 0, timeloss = 0, newtime = false},
+        {name = "Trash 2", time = 0, fightTime = 0, timeloss = 0, newtime = false},
+        {name = "Trash 3", time = 0, fightTime = 0, timeloss = 0, newtime = false},
+        {name = "Trash 4", time = 0, fightTime = 0, timeloss = 0, newtime = false},
+        {name = "Trash 5", time = 0, fightTime = 0, timeloss = 0, newtime = false},
+        {name = "Trash 6", time = 0, fightTime = 0, timeloss = 0, newtime = false},
+        {name = "Rinaerus the Rancid & Orzun the Foul-Smelling", time = 0, fightTime = 0, timeloss = 0, newtime = false},
+        {name = "Trash 7", time = 0, fightTime = 0, timeloss = 0, newtime = false},
+        {name = "Doylemish Ironheart", time = 0, fightTime = 0, timeloss = 0, newtime = false},
+        {name = "Trash 8", time = 0, fightTime = 0, timeloss = 0, newtime = false},
+        {name = "Trash 9", time = 0, fightTime = 0, timeloss = 0, newtime = false},
+        {name = "Trash 10", time = 0, fightTime = 0, timeloss = 0, newtime = false},
+        {name = "Trash 11", time = 0, fightTime = 0, timeloss = 0, newtime = false},
+        {name = "Matriarch Aldis", time = 0, fightTime = 0, timeloss = 0, newtime = false},
+        {name = "trash12", time = 0, fightTime = 0, timeloss = 0, newtime = false},
+        {name = "trash13", time = 0, fightTime = 0, timeloss = 0, newtime = false},
+        {name = "trash14", time = 0, fightTime = 0, timeloss = 0, newtime = false},
+        {name = "trash15", time = 0, fightTime = 0, timeloss = 0, newtime = false},
+        {name = "Plague Concoctor Mortieu", time = 0, fightTime = 0, timeloss = 0, newtime = false},
+        {name = "Zaan the Scalecaller", time = 0, fightTime = 0, timeloss = 0, newtime = false},
     },
 
     defaults = {
         splits ={ 
-            {name = "trash1", time = 0, fightTime = 0},
-            {name = "trash2", time = 0, fightTime = 0},
-            {name = "trash3", time = 0, fightTime = 0},
-            {name = "trash4", time = 0, fightTime = 0},
-            {name = "trash5", time = 0, fightTime = 0},
-            {name = "trash6", time = 0, fightTime = 0},
-            {name = "boss1", time = 0, fightTime = 0},
-            {name = "trash7", time = 0, fightTime = 0},
-            {name = "boss2", time = 0, fightTime = 0},
-            {name = "trash8", time = 0, fightTime = 0},
-            {name = "trash9", time = 0, fightTime = 0},
-            {name = "trash10", time = 0, fightTime = 0},
-            {name = "trash11", time = 0, fightTime = 0},
-            {name = "boss3", time = 0, fightTime = 0},
-            {name = "trash12", time = 0, fightTime = 0},
-            {name = "trash13", time = 0, fightTime = 0},
-            {name = "trash14", time = 0, fightTime = 0},
-            {name = "trash15", time = 0, fightTime = 0},
-            {name = "boss4", time = 0, fightTime = 0},
-            {name = "boss5", time = 0, fightTime = 0},
+            {name = "Trash 1", time = 0, fightTime = 0},
+            {name = "Trash 2", time = 0, fightTime = 0},
+            {name = "Trash 3", time = 0, fightTime = 0},
+            {name = "Trash 4", time = 0, fightTime = 0},
+            {name = "Trash 5", time = 0, fightTime = 0},
+            {name = "Trash 6", time = 0, fightTime = 0},
+            {name = "Rinaerus the Rancid & Orzun the Foul-Smelling", time = 0, fightTime = 0},
+            {name = "Trash 7", time = 0, fightTime = 0},
+            {name = "Doylemish Ironheart", time = 0, fightTime = 0},
+            {name = "Trash 8", time = 0, fightTime = 0},
+            {name = "Trash 9", time = 0, fightTime = 0},
+            {name = "Trash 10", time = 0, fightTime = 0},
+            {name = "Trash 11", time = 0, fightTime = 0},
+            {name = "Matriarch Aldis", time = 0, fightTime = 0},
+            {name = "Trash 12", time = 0, fightTime = 0},
+            {name = "Trash 13", time = 0, fightTime = 0},
+            {name = "Trash 14", time = 0, fightTime = 0},
+            {name = "Trash 15", time = 0, fightTime = 0},
+            {name = "Plague Concoctor Mortieu", time = 0, fightTime = 0},
+            {name = "Zaan the Scalecaller", time = 0, fightTime = 0},
                 },
         stats = {
             {name = "Trifectas", count = "0"},
@@ -79,17 +79,25 @@ function ScpRunner:OnPlayerActivated()
     --[debug
     d("OnPlayerActivated Fired")
     if (zoneId == 1010 and self.currentTime == 0) then--If zone is scp, and current time ISN'T 0, it means function fired due to zone rechange (2nd boss door) or respawn (at wayshrine)
+        d("zone is 1010")
+        --[show timer]
+        self.UI.HUDTimer:SetHidden(false)
+        self.UI.HUDTimerIcon:SetHidden(false)
         --[[Start listening for]]
         --[Dungeon Start and Finish/Failed Checkers]
-        EVENT_MANAGER:RegisterForEvent("scprStartTimer", EVENT_PLAYER_COMBAT_STATE, function() ScpRunner:OnStartDungeon() end)
-        EVENT_MANAGER:RegisterForEvent("scprEndDungeon", EVENT_UNIT_DEATH_STATE_CHANGED, function() ScpRunner:OnZaanDeath() end)
+        EVENT_MANAGER:RegisterForEvent("scprStartTimer", EVENT_PLAYER_COMBAT_STATE, function(...) ScpRunner:OnStartDungeon(...) end)
+        EVENT_MANAGER:RegisterForEvent("scprEndDungeon", EVENT_UNIT_DEATH_STATE_CHANGED, function(...) ScpRunner:OnZaanDeath(...) end)
         EVENT_MANAGER:AddFilterForEvent("scprEndDungeon", EVENT_UNIT_DEATH_STATE_CHANGED, REGISTER_FILTER_UNIT_TAG, "boss1")
-        EVENT_MANAGER:RegisterForEvent("scprPlayerDied", EVENT_UNIT_DEATH_STATE_CHANGED, function() ScpRunner:OnPlayerDied() end)
+        EVENT_MANAGER:RegisterForEvent("scprPlayerDied", EVENT_UNIT_DEATH_STATE_CHANGED, function(...) ScpRunner:OnPlayerDied(...) end)
         EVENT_MANAGER:AddFilterForEvent("scprPlayerDied", EVENT_UNIT_DEATH_STATE_CHANGED, REGISTER_FILTER_UNIT_TAG, "player")
         --[Splits Manager]
-        EVENT_MANAGER:RegisterForEvent("scprCreateSplits", EVENT_PLAYER_COMBAT_STATE, function() ScpRunner:CreateSplitOnCombatEnd() end)
-        EVENT_MANAGER:RegisterForEvent("scprDamageDoneCheck", EVENT_COMBAT_EVENT, function() ScpRunner:OnDamageDone() end)
+        EVENT_MANAGER:RegisterForEvent("scprCreateSplits", EVENT_PLAYER_COMBAT_STATE, function(...) ScpRunner:CreateSplitOnCombatEnd(...) end)
+        EVENT_MANAGER:RegisterForEvent("scprDamageDoneCheck", EVENT_COMBAT_EVENT, function(...) ScpRunner:OnDamageDone(...) end)
         EVENT_MANAGER:AddFilterForEvent("scprDamageDoneCheck", EVENT_COMBAT_EVENT, REGISTER_FILTER_SOURCE_COMBAT_UNIT_TYPE, COMBAT_UNIT_TYPE_PLAYER)
+    else
+    d("zone isnt 1010")
+    self.UI.HUDTimer:SetHidden(true)
+    self.UI.HUDTimerIcon:SetHidden(true)
     end
 end
 --[load addon and savedvariables, starts OnPlayerActivated]
@@ -99,7 +107,7 @@ local function OnAddOnLoaded(event, addonName)
 
     ScpRunner.SavedVars = ZO_SavedVars:NewAccountWide("ScpRunnerSavedVariables", 1, nil, ScpRunner.defaults, "$InstallationWide")
 	
-	EVENT_MANAGER:RegisterForEvent(ScpRunner.playerActive, EVENT_PLAYER_ACTIVATED, function() ScpRunner:OnPlayerActivated() end)
+	EVENT_MANAGER:RegisterForEvent(ScpRunner.playerActive, EVENT_PLAYER_ACTIVATED, function(...) ScpRunner:OnPlayerActivated(...) end)
     ScpRunner:InitializeStatsScreen()
     ScpRunner:CreateStatsScreenOpenAnimation()
     ScpRunner:CreateSplitsList()
@@ -112,7 +120,9 @@ EVENT_MANAGER:RegisterForEvent(ScpRunner.name, EVENT_ADD_ON_LOADED, OnAddOnLoade
 
 --[Start Dungeon/Timer]
 function ScpRunner:OnStartDungeon(_, inCombat)
+    d("onstartdungeon fired")
     if inCombat == true and self.currentTime == 0 then
+        d("combat true for onstartdungeon, unregistered")
         ScpRunner:Timer()
         self.startTime = GetGameTimeMilliseconds()
         EVENT_MANAGER:UnregisterForEvent("scprStartTimer", EVENT_PLAYER_COMBAT_STATE)
@@ -120,6 +130,7 @@ function ScpRunner:OnStartDungeon(_, inCombat)
 end
 
 function ScpRunner:Timer()
+    d("timer begin fired")
     EVENT_MANAGER:RegisterForUpdate("scprTimer", self.updateTickRate, 
         function()
             self.currentTime = (GetGameTimeMilliseconds() - self.startTime) / 1000
@@ -137,8 +148,11 @@ function ScpRunner:OnZaanDeath(_,unitTag,_)
     end
 end
 
-function ScpRunner:onPlayerDied(_,_,isDead)
+function ScpRunner:OnPlayerDied(_,_,isDead)
+    d("onplayerdied fired")
     if isDead then
+         self.endTime = GetGameTimeMilliseconds()
+        d("onplayer died fired FOR REAL")
         ScpRunner:EndRun(0)
         d("Player Died")
     end
@@ -148,7 +162,7 @@ function ScpRunner:EndRun(Trifecta) --1 or 0, 1 means I killed zaan, aka trifect
     if Trifecta == 1 then 
         d("tri get")
     end
-
+    d("EndRun fired, unregisers events")
     --[Unregister all events and reset a few variables]
     EVENT_MANAGER:UnregisterForUpdate("scprTimer")
     EVENT_MANAGER:UnregisterForEvent("scprEndDungeon", EVENT_UNIT_DEATH_STATE_CHANGED)
@@ -160,19 +174,17 @@ function ScpRunner:EndRun(Trifecta) --1 or 0, 1 means I killed zaan, aka trifect
 end
 
 function ScpRunner:CompareandDisplayData()
+    d("compareanddisplay fired")
     --[Checks if run exists]
     if self.currentTime ~= 0 then
         d("Comparing Times, run had been started and ended")
 
-        --[Sets timeloss for each split recorded, to be displayed next to splits]--
+        --[Sets timeloss = 0 for each split recorded, to be displayed next to splits]--
         for i = 1, #self.currentRunSplits do --i = 1 (start number), until #table entry count, so 20 splits here.
             local BestSplitTime = self.SavedVars.splits[i].time
             self.currentRunSplits[i].timeloss = (self.currentRunSplits[i].time - BestSplitTime)
         end
-        
-        --[Sets]
-        
-        
+
         --[Calls function to display the stats screen and all other things attached to it]
         SCENE_MANAGER:Show("ScpRunnerStatsScene")
         self.statsScreenTimeline:PlayFromStart()
@@ -183,7 +195,10 @@ end
 
 function ScpRunner:TimeTallyer()
     PlaySound(SOUNDS.ENDLESS_DUNGEON_SCORE_CALCULATE)
-    local runTime = (self.endTime - self.startTime) 
+    d(self.startTime)
+    d(self.endTime)
+    local runTime = (self.endTime - self.startTime) / 1000
+    d(runTime)
     local elapsed = 0
     local tallyCurve = ZO_GenerateCubicBezierEase(0.5,0.15,0,1)
     
@@ -222,22 +237,23 @@ function ScpRunner:CreateSplitOnCombatEnd(_, inCombat)
         
         if not (self.currentSplit == 19 and splitFightTime <= 10) then
             --[this function is in the UI file]
-            self:ShowSplitsAnimation(self.UI.HUDSplitsIcon)
-            self.ShowSplitsAnimation(self.UI.HUDSplitsTime)
+            self:ShowSplitsAnimation(self.UI.HUDSplitsIcon, 120, 153, 120, 138, 120, 108)
+            self:ShowSplitsAnimation(self.UI.HUDSplitsTime, 145, 151, 145, 136, 145, 106)
 
             if bestSplit == 0 then
-                self.UI.SplitsTime:SetText((string.format("|ce6f024%02d:%05.2f", splitTime/60, splitTime%60))) 
+                self.currentRunSplits[self.currentSplit].newtime = true
+                self.UI.HUDSplitsTime:SetText((string.format("|ce6f024%02d:%05.2f", splitTime/60, splitTime%60))) 
             elseif splitTime <= bestSplit then
-                self.UI.SplitsTime:SetText((string.format("|c55e813-%02d:%05.2f", (bestSplit - splitTime)/60, (bestSplit - splitTime)%60)))
+                self.UI.HUDSplitsTime:SetText((string.format("|c55e813-%02d:%05.2f", (bestSplit - splitTime)/60, (bestSplit - splitTime)%60)))
             elseif splitTime >= bestSplit then
                 local timeLoss = splitTime - bestSplit
                 --[this function is in the UI file]
                 local color = self:SplitsColors(timeLoss)
-                self.UI.SplitsTime:SetText((string.format("|c%s+%02d:%05.2f", color, (splitTime - bestSplit)/60, (splitTime - bestSplit)%60)))
+                self.UI.HUDSplitsTime:SetText((string.format("|c%s+%02d:%05.2f", color, (splitTime - bestSplit)/60, (splitTime - bestSplit)%60)))
             end
-        
-        self.currentRunSplits[self.CurrentSplit].time = splitTime
-        self.currentRunSplits[self.CurrentSplit].fightTime = splitFightTime
+
+        self.currentRunSplits[self.currentSplit].time = splitTime
+        self.currentRunSplits[self.currentSplit].fightTime = splitFightTime
         
         self.wasDamageDone = false
         self.currentSplit = self.currentSplit + 1
@@ -246,9 +262,13 @@ function ScpRunner:CreateSplitOnCombatEnd(_, inCombat)
 end
 
 function ScpRunner:SaveOverBestSplit(PullName, NewBestTime)
-    for i = 1, #self.SavedVars.splits do
+    d("saveoverbestsplit fired for " .. tostring(PullName))
+    for i = 1, #self.defaults.splits do
          if self.SavedVars.splits[i].name == PullName then
-            self.SavedVars.splits[i].splits = NewBestTime
+            d(NewBestTime)
+            d("new best time saved") 
+            self.SavedVars.splits[i].time = NewBestTime
+            d(self.SavedVars.splits[i].time)
          end
     end
 end
