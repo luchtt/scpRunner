@@ -5,8 +5,8 @@ ScpRunner = {
 
     --[[Variables]]
     currentTime = 0,
-    startTime = 42069,
-    endTime = 69420,
+    startTime = 0,
+    endTime = 600.23,
 
     currentSplit = 0,
     currentSplitStartTime = 0,
@@ -16,26 +16,26 @@ ScpRunner = {
 
     --[[Tables]]--
     currentRunSplits = {
-        {name = "trash1", time = 0, fightTime = 0, timeloss = 0},
-        {name = "trash2", time = 0, fightTime = 0, timeloss = 0},
-        {name = "trash3", time = 0, fightTime = 0, timeloss = 0},
-        {name = "trash4", time = 0, fightTime = 0, timeloss = 0},
-        {name = "trash5", time = 0, fightTime = 0, timeloss = 0},
-        {name = "trash6", time = 0, fightTime = 0, timeloss = 0},
-        {name = "boss1", time = 0, fightTime = 0, timeloss = 0},
-        {name = "trash7", time = 0, fightTime = 0, timeloss = 0},
-        {name = "boss2", time = 0, fightTime = 0, timeloss = 0},
-        {name = "trash8", time = 0, fightTime = 0, timeloss = 0},
-        {name = "trash9", time = 0, fightTime = 0, timeloss = 0},
-        {name = "trash10", time = 0, fightTime = 0, timeloss = 0},
-        {name = "trash11", time = 0, fightTime = 0, timeloss = 0},
-        {name = "boss3", time = 0, fightTime = 0, timeloss = 0},
+        {name = "Trash 1", time = 5.555, fightTime = 5.555, timeloss = -0.46},
+        {name = "Trash 2", time = 20.21, fightTime = 8, timeloss = 4.56},
+        {name = "Trash 3", time = 0, fightTime = 0, timeloss = 0},
+        {name = "Trash 4", time = 0, fightTime = 0, timeloss = 0},
+        {name = "Trash 5", time = 0, fightTime = 0, timeloss = 0},
+        {name = "Trash 6", time = 0, fightTime = 0, timeloss = 0},
+        {name = "Rinaerus the Rancid & Orzun the Foul-Smelling", time = 0, fightTime = 0, timeloss = 0},
+        {name = "Trash 7", time = 0, fightTime = 0, timeloss = 0},
+        {name = "Doylemish Ironheart", time = 0, fightTime = 0, timeloss = 0},
+        {name = "Trash 8", time = 0, fightTime = 0, timeloss = 0},
+        {name = "Trash 9", time = 0, fightTime = 0, timeloss = 0},
+        {name = "Trash 10", time = 0, fightTime = 0, timeloss = 0},
+        {name = "Trash 11", time = 0, fightTime = 0, timeloss = 0},
+        {name = "Matriarch Aldis", time = 0, fightTime = 0, timeloss = 0},
         {name = "trash12", time = 0, fightTime = 0, timeloss = 0},
         {name = "trash13", time = 0, fightTime = 0, timeloss = 0},
         {name = "trash14", time = 0, fightTime = 0, timeloss = 0},
         {name = "trash15", time = 0, fightTime = 0, timeloss = 0},
-        {name = "boss4", time = 0, fightTime = 0, timeloss = 0},
-        {name = "boss5", time = 0, fightTime = 0, timeloss = 0},
+        {name = "Plague Concoctor Mortieu", time = 0, fightTime = 0, timeloss = 0},
+        {name = "Zaan the Scalecaller", time = 0, fightTime = 0, timeloss = 0},
     },
 
     defaults = {
@@ -176,12 +176,14 @@ function ScpRunner:CompareandDisplayData()
         --[Calls function to display the stats screen and all other things attached to it]
         SCENE_MANAGER:Show("ScpRunnerStatsScene")
         self.statsScreenTimeline:PlayFromStart()
+        ScpRunner:PopulateSplitsList()
+        scprStatsUISplitsListScrollBar:SetHidden(true)
     end
 end
 
 function ScpRunner:TimeTallyer()
     PlaySound(SOUNDS.ENDLESS_DUNGEON_SCORE_CALCULATE)
-    local runTime = (self.startTime - self.endTime)
+    local runTime = (self.endTime - self.startTime) 
     local elapsed = 0
     local tallyCurve = ZO_GenerateCubicBezierEase(0.5,0.15,0,1)
     
@@ -240,5 +242,13 @@ function ScpRunner:CreateSplitOnCombatEnd(_, inCombat)
         self.wasDamageDone = false
         self.currentSplit = self.currentSplit + 1
         end
+    end
+end
+
+function ScpRunner:SaveOverBestSplit(PullName, NewBestTime)
+    for i = 1, #self.SavedVars.splits do
+         if self.SavedVars.splits[i].name == PullName then
+            self.SavedVars.splits[i].splits = NewBestTime
+         end
     end
 end

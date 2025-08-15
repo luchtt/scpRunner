@@ -1,18 +1,53 @@
 <GuiXml>
     <Controls>
         <!-- Virtual controls -->
-        <Control name="scprSplitsTemplates" virtual="true" hidden="false">
-            <Dimensions y="32"/>
+        <Control name="scprSplitsTemplates" virtual="true" mouseEnabled="true" hidden="false">
+            <Dimensions y="88"/>
             <Controls>
-                <Label name="$(parent)SplitsName" font="ZoFontWinH2" color="INTERFACE_COLOR_TYPE_TEXT_COLORS:INTERFACE_TEXT_COLOR_NORMAL" horizontalAlignment="LEFT"/>
-                <Label name="$(parent)SplitsTime" font="ZoFontWinH3" color="INTERFACE_COLOR_TYPE_TEXT_COLORS:INTERFACE_TEXT_COLOR_NORMAL" horizontalAlignment="LEFT"/>
+                <Backdrop name="$(parent)BG" inherits="ZO_DefaultBackdrop" alpha="0">
+                    <AnchorFill/>
+                </Backdrop>
+                <Texture name="$(parent)SplitsIcon" textureFile="/esoui/art/lfg/lfg_indexicon_timedactivities_up.dds">
+                    <Anchor point="LEFT" offsetX="4"/>
+                    <Dimensions x="72" y="72"/>
+                </Texture>
+                <Label name="$(parent)SplitsName" font="ZoFontWinH2" wrapMode="ELLIPSIS" color="INTERFACE_COLOR_TYPE_TEXT_COLORS:INTERFACE_TEXT_COLOR_NORMAL" horizontalAlignment="LEFT">
+                    <Anchor point="LEFT" offsetX="72" offsetY="-24"/>
+                    <Dimensions x="196" y="20"/>
+                </Label>
+                <Texture name="$(parent)SplitsTimeIcon" textureFile="/esoui/art/miscellaneous/timer_64.dds">
+                    <Anchor point="LEFT" offsetX="72" offsetY="2"/>
+                    <Dimensions x="24" y="24"/>
+                </Texture>
+                <Label name="$(parent)SplitsTime" font="ZoFontWinH4" wrapMode="ELLIPSIS" color="INTERFACE_COLOR_TYPE_TEXT_COLORS:INTERFACE_TEXT_COLOR_SELECTED" horizontalAlignment="LEFT">
+                    <Anchor point="LEFT" offsetX="96" offsetY="2"/>
+                </Label>
+                <Texture name="$(parent)SplitsFightTimeIcon" textureFile="/esoui/art/lfg/lfg_dps_down_no_glow_64.dds">
+                    <Anchor point="LEFT" offsetX="72" offsetY="24"/>
+                    <Dimensions x="24" y="24"/>
+                </Texture>
+                <Label name="$(parent)SplitsFightTime" font="ZoFontWinH4" wrapMode="ELLIPSIS" color="INTERFACE_COLOR_TYPE_TEXT_COLORS:INTERFACE_TEXT_COLOR_SELECTED" horizontalAlignment="LEFT">
+                    <Anchor point="LEFT" offsetX="96" offsetY="24"/>
+                </Label>
+                <Label name="$(parent)SplitsTimeLoss" font="ZoFontWinH4" wrapMode="ELLIPSIS" color="INTERFACE_COLOR_TYPE_TEXT_COLORS:INTERFACE_TEXT_COLOR_NORMAL" horizontalAlignment="LEFT">
+                    <Anchor point="LEFT" offsetX="192" offsetY="0"/>
+                </Label>
+                <Button name="$(parent)SplitsOverwriteBest">
+                    <Textures 
+                    normal="/esoui/art/crafting/scribing_tabicon_recent_up.dds"
+                    mouseOver="/esoui/art/crafting/scribing_tabicon_recent_over.dds"
+                    pressed="/esoui/art/crafting/scribing_tabicon_recent_down.dds"
+                    disabled="/esoui/art/crafting/scribing_tabicon_recent_disabled.dds"/>
+                    <Anchor point="LEFT" offsetX="248" offsetY="0"/>
+                    <Dimensions x="72" y="72"/>
+                </Button>
             </Controls>
         </Control>
         
         <!-- Timer and Splits visualizer -->
         <TopLevelControl name="scprHudTimer" resizeToFitDescendents="true" mouseEnabled="true" movable="true" clampedToScreen="true">
             <Controls>
-				<Texture name="$(parent)Icon" textureFile="/esoui/art/miscellaneous/timer_32.dds" hidden="true">
+				<Texture name="$(parent)Icon" textureFile="/esoui/art/miscellaneous/timer_64.dds" hidden="true">
 					<Anchor point="TOPLEFT" offsetX="100" offsetY="100"/>
 					<Dimensions x="32" y="32"/>
 				</Texture>
@@ -121,11 +156,11 @@
                             </Texture>
                             <Texture name="$(parent)BottomDivider" textureFile="/esoui/art/miscellaneous/horizontaldivider_dynamic.dds" alpha="0">
                                 <Anchor point="CENTER"/>
-                                <Dimensions x="230" y="24"/>
+                                <Dimensions x="320" y="24"/>
                             </Texture>
                             <Control name="$(parent)List" inherits="ZO_ScrollList">
                                 <Anchor point="CENTER" offsetX="170" offsetY ="0"/>
-                                <Dimensions x="230" y="570"/>
+                                <Dimensions x="333" y="570"/>
                             </Control>
                         </Controls>
                     </Control>
@@ -150,7 +185,7 @@
                             </Texture>
                             <Texture name="$(parent)BottomDivider" textureFile="/esoui/art/miscellaneous/horizontaldivider_dynamic.dds" alpha="0">
                                 <Anchor point="CENTER"/>
-                                <Dimensions x="230" y="24"/>
+                                <Dimensions x="320" y="24"/>
                             </Texture>
                         </Controls>
                     </Control>
