@@ -85,6 +85,7 @@ end
 --[[End Screen UI]]
 -------------------
 
+--[Creates the scene (run on init)]
 function ScpRunner:InitializeStatsScreen()
     self.Scene = ZO_Scene:New("ScpRunnerStatsScene", SCENE_MANAGER)
     self.fragment = ZO_FadeSceneFragment:New(scprStatsUI)
@@ -95,17 +96,24 @@ function ScpRunner:InitializeStatsScreen()
     self.Scene:RegisterCallback("StateChange", function(oldState, newState) ScpRunner:OnSceneStateChanged(oldState, newState) end)
 end
 
+--[Handler for when the scene is shown/unshown, used to start animations]
 function ScpRunner:OnSceneStateChanged(oldState, newState)
     d("scenestatechanged")
     
-    if (newState == SCENE_SHOWN and self.wasStatsScreenOpened == false) then
-
-        self.wasStatsScreenOpened = true
+    if (newState == SCENE_SHOWN) then
+        if ZO_GetEffectiveDungeonDifficulty() == 1 then
+            scprStatsUIDifficultyChangerVeteranDiffInactive:SetHidden(false)
+            scprStatsUIDifficultyChangerNormalDiffInactive:SetHidden(true)
+        else
+            scprStatsUIDifficultyChangerVeteranDiffInactive:SetHidden(true)
+            scprStatsUIDifficultyChangerNormalDiffInactive:SetHidden(false)
+        end
     elseif (newState == SCENE_HIDDEN) then
         d("scene hidden waow")
     end
 end
 
+--[Creates animations for every UI piece's initial position upon showing the stats screen initially.]
 function ScpRunner:CreateStatsScreenOpenAnimation()
     d("createanimation fired")
     local Curve = ZO_GenerateCubicBezierEase(1,.08,.69,.63)
@@ -126,6 +134,15 @@ function ScpRunner:CreateStatsScreenOpenAnimation()
         makeVisible:SetEasingFunction(Curve)
     end
 end
+
+----------------------
+--[Difficulty Changer]
+
+function ScpRunner:CreateDifficultyChangeSpinAnimation()
+    scprStatsUIDifficultyChangerChangeDiffButton:SetHandler("OnMouseDown", function () self:DifficultyChanger() end)
+    --NO ANIMATION BECAUSE IT CANT MAKE BUTTONS SPIN??? WHAT???
+end
+--shit this be difficult ill postpone it lol
 
 ---------------
 --[Splits List]
@@ -177,7 +194,8 @@ function ScpRunner:FormatSplitsListItems(control, data)
         
         --[Save split if it beats PB. aka click the book and quill button]
         Overwrite:SetHandler("OnMouseDown", function() 
-            ScpRunner:SaveOverBestSplit(data.name, data.time) 
+            --[SaveOverBestSplit function takes the name, cross references it to savedvar names, and then saves time/fight time]
+            ScpRunner:SaveOverBestSplit(data.name, data.time, data.fightTime) 
             Overwrite:SetEnabled(false)
             Overwrite:SetMouseEnabled(false)
             end)

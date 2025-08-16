@@ -215,21 +215,21 @@
                                 <Anchor point="CENTER"/>
                                 <Dimensions x="56" y="56"/>
                             </Button>
-                            <Texture name="$(parent)NormalDiffActive" textureFile="/esoui/art/lfg/lfg_normaldungeon_up.dds" alpha="0">
+                            <Texture name="$(parent)NormalDiffActive" textureFile="/esoui/art/lfg/lfg_normaldungeon_down.dds" alpha="0">
                                 <Anchor point="CENTER"/>
-                                <Dimensions x="50" y="50"/>
+                                <Dimensions x="48" y="48"/>
                             </Texture>
                             <Texture name="$(parent)NormalDiffInactive" textureFile="/esoui/art/lfg/lfg_normaldungeon_disabled.dds" alpha="0">
                                 <Anchor point="CENTER"/>
-                                <Dimensions x="50" y="50"/>
+                                <Dimensions x="48" y="48"/>
                             </Texture>
-                            <Texture name="$(parent)VeteranDiffActive" textureFile="/esoui/art/lfg/lfg_veterandungeon_up.dds" alpha="0">
+                            <Texture name="$(parent)VeteranDiffActive" textureFile="/esoui/art/lfg/lfg_veterandungeon_down.dds" alpha="0">
                                 <Anchor point="CENTER"/>
-                                <Dimensions x="50" y="50"/>
+                                <Dimensions x="48" y="48"/>
                             </Texture>
                             <Texture name="$(parent)VeteranDiffInactive" textureFile="/esoui/art/lfg/lfg_veterandungeon_disabled.dds" alpha="0">
                                 <Anchor point="CENTER"/>
-                                <Dimensions x="50" y="50"/>
+                                <Dimensions x="48" y="48"/>
                             </Texture>
                             <Texture name="$(parent)TopDivider" textureFile="/esoui/art/miscellaneous/horizontaldivider_dynamic.dds" alpha="0">
                                 <Anchor point="CENTER"/>

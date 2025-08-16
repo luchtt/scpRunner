@@ -80,10 +80,10 @@ function ScpRunner:OnPlayerActivated()
     d("OnPlayerActivated Fired")
     if (zoneId == 1010 and self.currentTime == 0) then--If zone is scp, and current time ISN'T 0, it means function fired due to zone rechange (2nd boss door) or respawn (at wayshrine)
         d("zone is 1010")
+        
         --[show timer]
         self.UI.HUDTimer:SetHidden(false)
         self.UI.HUDTimerIcon:SetHidden(false)
-        --[[Start listening for]]
         --[Dungeon Start and Finish/Failed Checkers]
         EVENT_MANAGER:RegisterForEvent("scprStartTimer", EVENT_PLAYER_COMBAT_STATE, function(...) ScpRunner:OnStartDungeon(...) end)
         EVENT_MANAGER:RegisterForEvent("scprEndDungeon", EVENT_UNIT_DEATH_STATE_CHANGED, function(...) ScpRunner:OnZaanDeath(...) end)
@@ -110,6 +110,7 @@ local function OnAddOnLoaded(event, addonName)
 	EVENT_MANAGER:RegisterForEvent(ScpRunner.playerActive, EVENT_PLAYER_ACTIVATED, function(...) ScpRunner:OnPlayerActivated(...) end)
     ScpRunner:InitializeStatsScreen()
     ScpRunner:CreateStatsScreenOpenAnimation()
+    ScpRunner:CreateDifficultyChangeSpinAnimation()
     ScpRunner:CreateSplitsList()
 end
 EVENT_MANAGER:RegisterForEvent(ScpRunner.name, EVENT_ADD_ON_LOADED, OnAddOnLoaded)
@@ -145,6 +146,8 @@ function ScpRunner:OnZaanDeath(_,unitTag,_)
         self.endTime = GetGameTimeMilliseconds()
         ScpRunner:EndRun(1)
         d("Zaan Died")
+        --[temporary]
+        self.SavedVars.Trifectas.count = self.SavedVars.Trifectas.count + 1
     end
 end
 
@@ -173,13 +176,14 @@ function ScpRunner:EndRun(Trifecta) --1 or 0, 1 means I killed zaan, aka trifect
     ScpRunner:CompareandDisplayData()
 end
 
+--[Called upon run ending due to either a death or zaan kill. Compares and displays the data ready for processing in the UI]
 function ScpRunner:CompareandDisplayData()
     d("compareanddisplay fired")
     --[Checks if run exists]
     if self.currentTime ~= 0 then
         d("Comparing Times, run had been started and ended")
 
-        --[Sets timeloss = 0 for each split recorded, to be displayed next to splits]--
+        --[Sets timeloss variable(which will be for example 4.6 seconds if I lost 4.6 seconds on that split) for each split recorded, to be displayed next to splits]--
         for i = 1, #self.currentRunSplits do --i = 1 (start number), until #table entry count, so 20 splits here.
             local BestSplitTime = self.SavedVars.splits[i].time
             self.currentRunSplits[i].timeloss = (self.currentRunSplits[i].time - BestSplitTime)
@@ -193,6 +197,7 @@ function ScpRunner:CompareandDisplayData()
     end
 end
 
+--[when first opening the UI after a run, this tallys up the run's time in an acceleration curve, before opening the rest of the ui.]
 function ScpRunner:TimeTallyer()
     PlaySound(SOUNDS.ENDLESS_DUNGEON_SCORE_CALCULATE)
     d(self.startTime)
@@ -210,6 +215,38 @@ function ScpRunner:TimeTallyer()
                 EVENT_MANAGER:UnregisterForUpdate("TimeTallyerAnimation")     
             end
         end)
+end
+
+--------------------
+--[Reset Difficulty]
+
+function ScpRunner:DifficultyChanger()
+    --[onclicked spinny icon]
+    d("clicked")
+    if ZO_GetEffectiveDungeonDifficulty() == 2 then --Difficulty 1 = normal, 2 is vet 
+        SetVeteranDifficulty(false)
+        d("normal now")
+        SetVeteranDifficulty(true)
+        d("vet again")
+    elseif ZO_GetEffectiveDungeonDifficulty() == 1 then
+        SetVeteranDifficulty(true)
+        SetVeteranDifficulty(false)
+    end
+    ScpRunner:ResetDataForNextRun() --find better location ++ automate
+end
+
+--------------
+--[Reset Data]
+
+function ScpRunner:ResetDataForNextRun()
+    self.currentTime = 0
+    self.startTime = 0
+    self.endTime = 0
+
+    self.currentSplit = 1
+    self.currentSplitStartTime = 0
+    self.currentSplitEndTime = 0
+    self.wasDamageDone = false
 end
 
 ------------------
@@ -261,14 +298,12 @@ function ScpRunner:CreateSplitOnCombatEnd(_, inCombat)
     end
 end
 
-function ScpRunner:SaveOverBestSplit(PullName, NewBestTime)
-    d("saveoverbestsplit fired for " .. tostring(PullName))
+--[Links back to the onDown handler for FormatSplitsList function in the UI file]
+function ScpRunner:SaveOverBestSplit(PullName, NewBestTime, FightTime)
     for i = 1, #self.defaults.splits do
          if self.SavedVars.splits[i].name == PullName then
-            d(NewBestTime)
-            d("new best time saved") 
             self.SavedVars.splits[i].time = NewBestTime
-            d(self.SavedVars.splits[i].time)
+            self.SavedVars.splits[i].time = FightTime
          end
     end
 end
